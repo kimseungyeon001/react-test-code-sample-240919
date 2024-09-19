@@ -38,4 +38,10 @@ npm run dev
 npm run storybook
 ```
 
-## Introduction
+### Test
+
+```
+npm run test
+or
+npm run test:watch
+```

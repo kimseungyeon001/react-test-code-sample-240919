@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { UserPage } from '@/components/pages/userPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,7 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>dummy page</div>,
+    element: <UserPage />,
   },
 ])
 

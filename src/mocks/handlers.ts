@@ -1,62 +1,38 @@
 import { http, HttpResponse, delay } from 'msw'
 import { config } from '@/config'
 
-const { baseFirstUrl, baseSecondUrl } = config
+const { baseUrl } = config
 
-export function buildUserNameFetch() {
-  return http.get(`${baseFirstUrl}/user`, async () => {
-    await delay(2000)
+export function buildUserFetch() {
+  return http.get(`${baseUrl}/user`, async () => {
+    await delay(200)
     return HttpResponse.json({
-      id: 'user-id',
-      name: 'user name',
+      id: 'user-id-1',
+      name: 'john',
     })
   })
 }
 
-export function buildUserNameFetchLoading() {
-  return http.get(`${baseFirstUrl}/user`, async () => {
-    await delay('infinite')
-  })
-}
-
-export function buildUserNameFetchError() {
-  return http.get(`${baseFirstUrl}/user`, async () => {
-    await delay(200)
+export function buildUserFetchClientError() {
+  return http.get(`${baseUrl}/user`, async () => {
     // client error
-    return HttpResponse.json('client error: not found', { status: 404 })
+    return HttpResponse.json('Client error: not found', { status: 404 })
+  })
+}
+
+export function buildUserFetchServerError() {
+  return http.get(`${baseUrl}/user`, async () => {
     // server error
-    // return HttpResponse.json('server error: bad gateway', { status: 502 })
-    // network error
-    // return HttpResponse.error()
+    return HttpResponse.json('Server error: bad gateway', { status: 502 })
   })
 }
 
-export function buildUserDescriptionFetch() {
-  return http.get(`${baseSecondUrl}/user`, async () => {
-    await delay(2000)
-    return HttpResponse.json({
-      id: 'user-id',
-      description: 'user description',
-    })
-  })
-}
-
-export function buildUserDescriptionFetchLoading() {
-  return http.get(`${baseSecondUrl}/user`, async () => {
-    await delay('infinite')
-  })
-}
-
-export function buildUserDescriptionFetchError() {
-  return http.get(`${baseSecondUrl}/user`, async () => {
+export function buildUserFetchNetworkError() {
+  return http.get(`${baseUrl}/user`, async () => {
     await delay(200)
-    // client error
-    return HttpResponse.json('not found', { status: 404 })
-    // server error
-    // return HttpResponse.json('server error: bad gateway', { status: 502 })
     // network error
-    // return HttpResponse.error()
+    return HttpResponse.error()
   })
 }
 
-export const handlers = [buildUserNameFetch(), buildUserDescriptionFetch()]
+export const handlers = [buildUserFetch()]
