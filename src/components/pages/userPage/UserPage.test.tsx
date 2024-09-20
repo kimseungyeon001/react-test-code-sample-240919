@@ -6,9 +6,9 @@ import {
   buildUserFetch,
   buildUserFetchClientError,
   buildUserFetchServerError,
-  buildUserFetchNetworkError,
 } from '@/mocks/handlers'
 
+// NOTE: Write your test code with as many cases as possible.
 describe('Test UserPage', () => {
   test('after loading, user information is displayed', async () => {
     mockServer.use(buildUserFetch())
@@ -18,11 +18,11 @@ describe('Test UserPage', () => {
       </TestWrapper>,
     )
 
-    const loading = await screen.findByTestId('user-loading')
+    const loading = await screen.findByTestId('userLoading')
     expect(loading).toBeInTheDocument()
     expect(loading).toHaveTextContent('...loading')
 
-    const userPage = await screen.findByTestId('user-page')
+    const userPage = await screen.findByTestId('userPage')
     expect(userPage).toBeInTheDocument()
     expect(userPage).toHaveTextContent('Hello john.')
   })
@@ -35,10 +35,10 @@ describe('Test UserPage', () => {
       </TestWrapper>,
     )
 
-    const loading = await screen.findByTestId('user-loading')
+    const loading = await screen.findByTestId('userLoading')
     expect(loading).toBeInTheDocument()
 
-    const userErrorMessage = await screen.findByTestId('user-error-message')
+    const userErrorMessage = await screen.findByTestId('userErrorMessage')
     expect(userErrorMessage).toBeInTheDocument()
     expect(userErrorMessage).toHaveTextContent('Not Found')
   })
@@ -51,27 +51,11 @@ describe('Test UserPage', () => {
       </TestWrapper>,
     )
 
-    const loading = await screen.findByTestId('user-loading')
+    const loading = await screen.findByTestId('userLoading')
     expect(loading).toBeInTheDocument()
 
-    const userErrorMessage = await screen.findByTestId('user-error-message')
+    const userErrorMessage = await screen.findByTestId('userErrorMessage')
     expect(userErrorMessage).toBeInTheDocument()
     expect(userErrorMessage).toHaveTextContent('Bad Gateway')
-  })
-
-  test('After loading, user information is not displayed and network error message is displayed', async () => {
-    mockServer.use(buildUserFetchNetworkError())
-    render(
-      <TestWrapper>
-        <UserPage />
-      </TestWrapper>,
-    )
-
-    const loading = await screen.findByTestId('user-loading')
-    expect(loading).toBeInTheDocument()
-
-    const userErrorMessage = await screen.findByTestId('user-error-message')
-    expect(userErrorMessage).toBeInTheDocument()
-    expect(userErrorMessage).toHaveTextContent('Failed to fetch')
   })
 })

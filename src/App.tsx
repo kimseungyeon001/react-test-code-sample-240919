@@ -6,6 +6,7 @@ import {
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { UserPage } from '@/components/pages/userPage'
+import { UserRegisterPage } from '@/components/pages/userRegisterPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,12 +18,18 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache(),
 })
 
-const router = createBrowserRouter([
+export const routes = [
   {
     path: '/',
     element: <UserPage />,
   },
-])
+  {
+    path: '/register',
+    element: <UserRegisterPage />,
+  },
+]
+
+const router = createBrowserRouter(routes)
 
 function App() {
   return (

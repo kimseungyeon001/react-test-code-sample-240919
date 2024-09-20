@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-export function DefaultLayout({ children }: PropsWithChildren) {
+export function Template({ children }: PropsWithChildren) {
   return (
     <div className="h-screen w-full">
       {/* main */}

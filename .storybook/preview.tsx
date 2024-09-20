@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react'
 import React from 'react'
 import '../src/index.css'
 import { initialize, mswLoader } from 'msw-storybook-addon'
+import { MemoryRouter } from 'react-router-dom'
 
 // // Start Mock Service Worker
 initialize({ onUnhandledRequest: 'bypass' })
@@ -20,7 +21,11 @@ const preview: Preview = {
   loaders: [mswLoader],
   decorators: [
     (Story) => {
-      return <Story />
+      return (
+        <MemoryRouter>
+          <Story />
+        </MemoryRouter>
+      )
     },
   ],
 }

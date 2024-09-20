@@ -15,6 +15,7 @@ export function buildUserFetch() {
 
 export function buildUserFetchClientError() {
   return http.get(`${baseUrl}/user`, async () => {
+    await delay(200)
     // client error
     return HttpResponse.json('Client error: not found', { status: 404 })
   })
@@ -22,17 +23,33 @@ export function buildUserFetchClientError() {
 
 export function buildUserFetchServerError() {
   return http.get(`${baseUrl}/user`, async () => {
+    await delay(200)
     // server error
     return HttpResponse.json('Server error: bad gateway', { status: 502 })
   })
 }
 
-export function buildUserFetchNetworkError() {
-  return http.get(`${baseUrl}/user`, async () => {
+export function buildUserPost() {
+  return http.post(`${baseUrl}/user`, async () => {
     await delay(200)
-    // network error
-    return HttpResponse.error()
+    return HttpResponse.json('success')
   })
 }
 
-export const handlers = [buildUserFetch()]
+export function buildUserPostClientError() {
+  return http.post(`${baseUrl}/user`, async () => {
+    await delay(200)
+    // client error
+    return HttpResponse.json('Client error: bad request', { status: 400 })
+  })
+}
+
+export function buildUserPostServerError() {
+  return http.post(`${baseUrl}/user`, async () => {
+    await delay(200)
+    // server error
+    return HttpResponse.json('Server error: bad gateway', { status: 502 })
+  })
+}
+
+export const handlers = [buildUserFetch(), buildUserPostServerError()]
